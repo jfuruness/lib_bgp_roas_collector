@@ -1,0 +1,7 @@
+-test init
+-test get_mrt_urls with different start and end for standard
+-test _clean_path
+-test parse files with threads, start, end, etc
+
+-after this: run program, write documentation on your own laptt
+o
