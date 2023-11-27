@@ -4,18 +4,12 @@
 
 # roa\_collector
 
-Downloads ROAs from https://rpki-validator.ripe.net/api/export.json,
-inserts them in a CSV,
-and returns them as a list of ROA dataclasses (containing asn, prefix, max_length, and ta properties, where ta is RIPE, afrinic, etc)
-
 * [Description](#package-description)
 * [Usage](#usage)
 * [Installation](#installation)
 * [Testing](#testing)
 * [Development/Contributing](#developmentcontributing)
-* [Credits](#credits)
 * [Licence](#license)
-* [TODO](#todo)
 
 ## Package Description
 
@@ -99,7 +93,7 @@ tox
 6. Commit your changes: `git commit -am 'Add some feature'`
 7. Push to the branch: `git push origin my-new-feature`
 8. Ensure github actions are passing tests
-9. Email me at jfuruness@gmail.com
+9. Email me at jfuruness@gmail.com if it's been a while and I haven't seen it
 
 ## License
 * [roa\_collector](#roa\_collector)
