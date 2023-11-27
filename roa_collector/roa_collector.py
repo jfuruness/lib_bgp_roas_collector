@@ -55,4 +55,5 @@ class ROACollector:
             with self.csv_path.open("w") as temp_csv:
                 fieldnames = list(asdict(roas[0]).keys())
                 writer = csv.DictWriter(temp_csv, fieldnames=fieldnames)
+                writer.writeheader()
                 writer.writerows([asdict(x) for x in roas])
