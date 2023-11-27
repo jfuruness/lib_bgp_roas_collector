@@ -57,6 +57,7 @@ If you want to install the project for development:
 git clone https://github.com/jfuruness/roa_collector.git
 cd roa_collector
 pip3 install -e .[test]
+pre-commit install
 ```
 
 To test the development package: [Testing](#testing)
