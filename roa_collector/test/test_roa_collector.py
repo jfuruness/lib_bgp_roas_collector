@@ -1,7 +1,6 @@
 import csv
 from dataclasses import asdict
 
-import pytest
 
 from roa_collector import ROACollector
 

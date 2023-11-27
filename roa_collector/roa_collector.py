@@ -30,7 +30,9 @@ class ROACollector:
         headers = {"Accept": "application/xml;q=0.9,*/*;q=0.8"}
         response = requests.get(self.URL, headers=headers)
         response.raise_for_status()
-        return response.json()["roas"]
+        roas_dict = response.json()["roas"]
+        assert isinstance(roas_dict, dict), "for mypy"
+        return roas_dict
 
     def _parse_roa_json(self, unformatted_roas: dict[Any, Any]) -> tuple[ROA, ...]:
         """Parse JSON into a tuple of ROA objects"""
@@ -39,7 +41,7 @@ class ROACollector:
         for roa in unformatted_roas:
             formatted_roas.append(
                 ROA(
-                    asn=int(re.findall(r'\d+', roa["asn"])[0]),
+                    asn=int(re.findall(r"\d+", roa["asn"])[0]),
                     prefix=roa["prefix"],
                     max_length=int(roa["maxLength"]),
                     # RIPE, afrinic, etc
