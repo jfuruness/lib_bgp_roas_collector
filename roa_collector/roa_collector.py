@@ -24,17 +24,19 @@ class ROACollector:
         self._write_csv(roas)
         return roas
 
-    def _get_json_roas(self) -> dict[Any, Any]:
+    def _get_json_roas(self) -> list[dict[Any, Any]]:
         """Returns the json from the url for the roas"""
 
         headers = {"Accept": "application/xml;q=0.9,*/*;q=0.8"}
         response = requests.get(self.URL, headers=headers)
         response.raise_for_status()
-        roas_dict = response.json()["roas"]
-        assert isinstance(roas_dict, dict), "for mypy"
-        return roas_dict
+        roas_list = response.json()["roas"]
+        assert isinstance(roas_list, list), "(for mypy) not a list? {roas_list}"
+        return roas_list
 
-    def _parse_roa_json(self, unformatted_roas: dict[Any, Any]) -> tuple[ROA, ...]:
+    def _parse_roa_json(
+        self, unformatted_roas: list[dict[Any, Any]]
+    ) -> tuple[ROA, ...]:
         """Parse JSON into a tuple of ROA objects"""
 
         formatted_roas = []
