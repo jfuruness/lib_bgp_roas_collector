@@ -1,10 +1,11 @@
 import csv
-from dataclasses import asdict
-from pathlib import Path
 import re
+from dataclasses import asdict
+from datetime import date
+from pathlib import Path
 from typing import Any, Optional
 
-import requests
+from requests_cache import CachedSession
 
 from .roa import ROA
 
@@ -14,8 +15,16 @@ class ROACollector:
 
     URL: str = "https://rpki-validator.ripe.net/api/export.json"
 
-    def __init__(self, csv_path: Optional[Path] = None):
+    def __init__(
+        self,
+        csv_path: Optional[Path] = None,
+        requests_cache_db_path: Optional[Path] = None,
+    ):
         self.csv_path: Optional[Path] = csv_path
+        if requests_cache_db_path is None:
+            requests_cache_db_path = Path(f"/tmp/{date.today()}.db")
+        self.requests_cache_db_path: Path = requests_cache_db_path
+        self.session = CachedSession(str(self.requests_cache_db_path))
 
     def run(self) -> tuple[ROA, ...]:
         """Downloads and stores roas from a json"""
@@ -28,7 +37,7 @@ class ROACollector:
         """Returns the json from the url for the roas"""
 
         headers = {"Accept": "application/xml;q=0.9,*/*;q=0.8"}
-        response = requests.get(self.URL, headers=headers)
+        response = self.session.get(self.URL, headers=headers)
         response.raise_for_status()
         roas_list = response.json()["roas"]
         assert isinstance(roas_list, list), "(for mypy) not a list? {roas_list}"
