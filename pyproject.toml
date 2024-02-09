@@ -5,7 +5,7 @@ description = "Downloads ROA info solely for research purposes"
 readme = "README.md"
 authors = [
     {name = "Justin Furuness", email = "jfuruness@gmail.com"},
-    {name = "Arvind Kasiliya", email = ""},
+    {name = "Arvind Kasiliya", email = "arvind.kasiliya@uconn.edu"}
 ]
 license = {file = "LICENSE.txt"}
 keywords = [
