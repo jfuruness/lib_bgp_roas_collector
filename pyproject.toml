@@ -23,7 +23,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "requests==2.31.0"
+    "requests-cache==1.1.1"
 ]
 
 [project.urls]
@@ -32,7 +32,6 @@ homepage = "https://github.com/jfuruness/roa_collector.git"
 
 [project.optional-dependencies]
 test = [
-    "types-requests==2.31.0.10",
     "black==23.11.0",
     "pre-commit==3.5.0",
     "setuptools==68.0.0",
