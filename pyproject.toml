@@ -24,6 +24,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "roa_checker==3.0.0",
     "requests-cache==1.2.0",
 ]
 

@@ -1,4 +1,5 @@
 import csv
+from ipaddress import ip_network
 import re
 from dataclasses import asdict
 from datetime import date
@@ -6,8 +7,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from requests_cache import CachedSession
-
-from .roa import ROA
+from roa_checker import ROA
 
 
 class ROACollector:
@@ -55,8 +55,8 @@ class ROACollector:
         for roa in unformatted_roas:
             formatted_roas.append(
                 ROA(
-                    asn=int(re.findall(r"\d+", roa["asn"])[0]),
-                    prefix=roa["prefix"],
+                    prefix=ip_network(roa["prefix"]),
+                    origin=int(re.findall(r"\d+", roa["asn"])[0]),
                     max_length=int(roa["maxLength"]),
                     # RIPE, afrinic, etc
                     ta=roa["ta"],
@@ -67,9 +67,14 @@ class ROACollector:
     def _write_csv(self, roas: tuple[ROA, ...]) -> None:
         """Writes ROAs to a CSV if csv_path is not None"""
 
+        rows = list()
+        for roa in roas:
+            row_dict = asdict(roa)
+            row_dict["prefix"] = str(row_dict["prefix"])
+            rows.append(row_dict)
+
         if self.csv_path:
             with self.csv_path.open("w") as temp_csv:
-                fieldnames = list(asdict(roas[0]).keys())
-                writer = csv.DictWriter(temp_csv, fieldnames=fieldnames)
+                writer = csv.DictWriter(temp_csv, fieldnames=list(rows[0].keys()))
                 writer.writeheader()
-                writer.writerows([asdict(x) for x in roas])
+                writer.writerows([x for x in rows])
