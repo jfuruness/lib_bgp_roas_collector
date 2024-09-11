@@ -1,7 +1,6 @@
 import csv
 from dataclasses import asdict
 
-
 from roa_collector import ROACollector
 
 
@@ -22,7 +21,7 @@ class TestROACollector:
         assert len(roas) > 100, "Not enough ROAs returned?"
         if write_csv:
             with csv_path.open() as f:
-                for row, roa in zip(csv.DictReader(f), roas):
+                for row, roa in zip(csv.DictReader(f), roas, strict=True):
                     gt = asdict(roa)
                     gt["prefix"] = str(gt["prefix"])
                     assert row == {k: str(v) for k, v in gt.items()}

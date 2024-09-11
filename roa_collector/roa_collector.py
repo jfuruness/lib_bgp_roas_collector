@@ -1,11 +1,12 @@
 import csv
-from ipaddress import ip_network
 import re
 from dataclasses import asdict
 from datetime import date
+from ipaddress import ip_network
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
+from platformdirs import PlatformDirs, PlatformDirsABC
 from requests_cache import CachedSession
 from roa_checker import ROA
 
@@ -17,12 +18,18 @@ class ROACollector:
 
     def __init__(
         self,
-        csv_path: Optional[Path] = None,
-        requests_cache_db_path: Optional[Path] = None,
+        csv_path: Path | None = None,
+        requests_cache_db_path: Path | None = None,
     ):
-        self.csv_path: Optional[Path] = csv_path
+        self.csv_path: Path | None = csv_path
         if requests_cache_db_path is None:
-            requests_cache_db_path = Path(f"/tmp/{date.today()}.db")
+            # NOTE: Can't use getpass here due to windows bug
+            # (https://bugs.python.org/issue32731)
+            DIRS: PlatformDirsABC = PlatformDirs("roa_collector", Path.home().name)
+            SINGLE_DAY_CACHE_DIR: Path = Path(DIRS.user_cache_dir) / str(date.today())
+            SINGLE_DAY_CACHE_DIR.mkdir(exist_ok=True, parents=True)
+            requests_cache_db_path = SINGLE_DAY_CACHE_DIR
+
         self.requests_cache_db_path: Path = requests_cache_db_path
         self.session: CachedSession = CachedSession(str(self.requests_cache_db_path))
 
@@ -77,4 +84,4 @@ class ROACollector:
             with self.csv_path.open("w") as temp_csv:
                 writer = csv.DictWriter(temp_csv, fieldnames=list(rows[0].keys()))
                 writer.writeheader()
-                writer.writerows([x for x in rows])
+                writer.writerows(list(rows))

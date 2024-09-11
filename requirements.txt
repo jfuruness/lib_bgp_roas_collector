@@ -1,2 +1,3 @@
-roa_checker==3.0.1
+roa_checker==3.0.2
 requests-cache==1.2.1
+platformdirs==4.2.2
