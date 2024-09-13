@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "roa_collector"
-version = "2.0.3"
+version = "2.0.4"
 description = "Downloads ROA info solely for research purposes"
 readme = "README.md"
 authors = [
@@ -36,7 +36,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "roa_checker==3.0.2",
+    "roa_checker==3.0.3",
     "requests-cache==1.2.1",
     "platformdirs==4.2.2",
 ]
@@ -67,7 +67,7 @@ roa_collector = ["py.typed"]
 # https://stackoverflow.com/a/76214408/8903959
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["roa_collector"]
+exclude = ["scripts"]
 
 [project.scripts]
 roa_collector = "roa_collector.__main__:main"
