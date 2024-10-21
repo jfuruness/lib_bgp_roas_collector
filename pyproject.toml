@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "roa_collector"
-version = "2.0.4"
+version = "2.0.5"
 description = "Downloads ROA info solely for research purposes"
 readme = "README.md"
 authors = [
@@ -36,7 +36,7 @@ classifiers = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "roa_checker==3.0.3",
+    "roa_checker~=3.0",
     "requests-cache==1.2.1",
     "platformdirs==4.2.2",
 ]
