@@ -7,7 +7,6 @@ Informational Badges:
 ![Linux](https://img.shields.io/badge/os-Linux-blue.svg)
 ![macOS Intel](https://img.shields.io/badge/os-macOS_Intel-lightgrey.svg)
 ![macOS ARM](https://img.shields.io/badge/os-macOS_ARM-lightgrey.svg)
-![Windows](https://img.shields.io/badge/os-Windows-blue.svg)
 
 Some Linting Badges (Where I could find them):
 
